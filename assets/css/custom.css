@@ -1,0 +1,78 @@
+/*
+Custom Css
+*/
+/* Make product cards use column flex layout so the button can stick to the bottom */
+.product-wap .card,
+.card.h-100 {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* ensure the card stretches inside grid cells */
+}
+
+/* Make the card body expand to fill the available space */
+.product-wap .card .card-body,
+.card.h-100 .card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+
+/* Push the button to the bottom of the card body */
+.card-body .btn-add-cart,
+.card-body .text-center > .btn {
+  margin-top: auto;
+}
+
+/* Optional: ensure consistent crop/spacing for card images */
+.product-wap .card .card-img,
+.product-wap .card img.card-img {
+  object-fit: cover;
+}
+
+/* Ensure product-wap outer card is a column flex container so inner image + body align */
+.product-wap {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.product-wap > .card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+
+/* Scope column stretching to the product grid row we injected earlier */
+#product-grid > [class*="col-"] {
+  display: flex;
+}
+
+#product-grid > [class*="col-"] > .product-wap {
+  flex: 1 1 auto;
+}
+
+/* Featured products row: ensure columns stretch and cards fill height */
+.bg-light > .container > .row > [class*="col-"] {
+  display: flex;
+}
+.bg-light > .container > .row > [class*="col-"] > .card {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+.bg-light > .container > .row > [class*="col-"] > .card .card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+
+/* Hide image overlay action buttons (heart, view, quick-add) across site */
+.product-overlay .list-unstyled,
+.product-overlay ul {
+  display: none !important;
+}
+
+/* Allow clicks to pass through overlay so image links work */
+.product-overlay {
+  pointer-events: none;
+}

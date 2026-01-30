@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "title": "Oupidatat non",
+    "price": "250.00",
+    "image": "assets/img/shop_01.jpg",
+    "sizes": ["M","L","X","XL"],
+    "colors": ["red","blue","black","light","green"],
+    "rating": 3,
+    "reviews": 24
+  },
+  {
+    "id": 2,
+    "title": "Cloud Nike Shoes",
+    "price": "480.00",
+    "image": "assets/img/shop_02.jpg",
+    "sizes": ["M","L","X","XL"],
+    "colors": ["red","blue","black"],
+    "rating": 3,
+    "reviews": 48
+  },
+  {
+    "id": 3,
+    "title": "Summer Addides Shoes",
+    "price": "360.00",
+    "image": "assets/img/shop_03.jpg",
+    "sizes": ["M","L","X","XL"],
+    "colors": ["red","blue","black","green"],
+    "rating": 5,
+    "reviews": 74
+  },
+  {
+    "id": 4,
+    "title": "Red Clothing",
+    "price": "20.00",
+    "image": "assets/img/shop_08.jpg",
+    "sizes": ["M","L","X","XL"],
+    "colors": ["red","blue"],
+    "rating": 4,
+    "reviews": 12
+  },
+  {
+    "id": 5,
+    "title": "White Shirt",
+    "price": "25.00",
+    "image": "assets/img/shop_09.jpg",
+    "sizes": ["M","L","X","XL"],
+    "colors": ["white","black"],
+    "rating": 4,
+    "reviews": 8
+  },
+  {
+    "id": 6,
+    "title": "Oupidatat non (Premium)",
+    "price": "45.00",
+    "image": "assets/img/shop_10.jpg",
+    "sizes": ["M","L","X","XL"],
+    "colors": ["black","green"],
+    "rating": 5,
+    "reviews": 30
+  }
+]

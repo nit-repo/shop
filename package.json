@@ -1,0 +1,13 @@
+{
+  "name": "zay-shop-template",
+  "version": "1.0.0",
+  "description": "Local dev wrapper for the Zay Shop static template",
+  "scripts": {
+    "dev": "live-server --port=3000 --open=./index.html",
+    "optimize": "echo \"Run image optimization manually or add imagemin/sharp pipeline\""
+  },
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  },
+  "license": "MIT"
+}
