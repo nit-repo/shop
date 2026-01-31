@@ -1,3 +1,34 @@
+/* Helper: Annotate all product actions in a container with data-item-id and data-item-name using safe DOM APIs */
+function annotateProductActions(product, container) {
+  if (!product || !product.id) return;
+  var itemId = String(product.id);
+  var itemName = (product.title || '').trim(); // Plain text, no HTML
+  
+  var $container = container.jquery ? container : $(container);
+  
+  // Set on container itself
+  $container.prop('dataset').itemId = itemId;
+  $container.prop('dataset').itemName = itemName;
+  
+  // Set on all image anchors
+  $container.find('a[href*="shop-single.html"]').each(function() {
+    this.dataset.itemId = itemId;
+    this.dataset.itemName = itemName;
+  });
+  
+  // Set on overlay action links (heart, view, cart)
+  $container.find('.product-overlay a').each(function() {
+    this.dataset.itemId = itemId;
+    this.dataset.itemName = itemName;
+  });
+  
+  // Set on add-to-cart button
+  $container.find('.btn-add-cart').each(function() {
+    this.dataset.itemId = itemId;
+    this.dataset.itemName = itemName;
+  });
+}
+
 /* Render product grid from /data/products.json */
 $(function () {
   var $grid = $('#product-grid');
@@ -14,14 +45,14 @@ $(function () {
         html += '      <a href="shop-single.html?id=' + p.id + '" data-item-id="' + p.id + '" data-item-name="' + (p.title && p.title.replace(/"/g, '&quot;')) + '"><img class="card-img rounded-0 img-fluid" src="' + p.image + '" loading="lazy" alt="' + p.title + '"></a>';
         html += '      <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">';
         html += '        <ul class="list-unstyled">';
-        html += '          <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>';
-        html += '          <li><a class="btn btn-success text-white mt-2" href="shop-single.html?id=' + p.id + '"><i class="far fa-eye"></i></a></li>';
-        html += '          <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>';
+        html += '          <li><a class="btn btn-success text-white" href="shop-single.html" data-item-id="' + p.id + '" data-item-name="' + (p.title && p.title.replace(/"/g, '&quot;')) + '"><i class="far fa-heart"></i></a></li>';
+        html += '          <li><a class="btn btn-success text-white mt-2" href="shop-single.html?id=' + p.id + '" data-item-id="' + p.id + '" data-item-name="' + (p.title && p.title.replace(/"/g, '&quot;')) + '"><i class="far fa-eye"></i></a></li>';
+        html += '          <li><a class="btn btn-success text-white mt-2" href="shop-single.html" data-item-id="' + p.id + '" data-item-name="' + (p.title && p.title.replace(/"/g, '&quot;')) + '"><i class="fas fa-cart-plus"></i></a></li>';
         html += '        </ul>';
         html += '      </div>';
         html += '    </div>';
         html += '    <div class="card-body">';
-        html += '      <a href="shop-single.html?id=' + p.id + '" class="h3 text-decoration-none">' + p.title + '</a>';
+        html += '      <a href="shop-single.html?id=' + p.id + '" class="h3 text-decoration-none" data-item-id="' + p.id + '" data-item-name="' + (p.title && p.title.replace(/"/g, '&quot;')) + '">' + p.title + '</a>';
         html += '      <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">';
         html += '        <li>' + p.sizes.join('/') + '</li>';
         html += '        <li class="pt-2">';
@@ -45,6 +76,14 @@ $(function () {
         html += '</div>';
       });
       $grid.html(html);
+      
+      // Annotate all product actions using DOM dataset for safe assignment
+      products.forEach(function (p) {
+        var $productCard = $grid.find('[data-item-id="' + p.id + '"]').first();
+        if ($productCard.length) {
+          annotateProductActions(p, $productCard);
+        }
+      });
     })
     .catch(function (err) {
       console.error('Failed to load products.json', err);
@@ -52,23 +91,38 @@ $(function () {
     });
 });
 
-// Simple Add-to-cart handler: increments cart badge if present
+// Add-to-cart handler: reads id/name from dataset and pushes GA4 event, increments cart badge
 $(function () {
   $(document).on('click', '.btn-add-cart', function (e) {
     e.preventDefault();
-    var id = $(this).data('id');
-    // Find cart badge (nearest element with a badge inside header)
+    
+    // Read id/name from dataset first (new safe method), fall back to data-id for backward compat
+    var id = this.dataset.itemId || $(this).data('id');
+    var name = this.dataset.itemName || '';
+    
+    // Push GA4 add_to_cart event if dataLayer is available
+    if (typeof dataLayer !== 'undefined' && id) {
+      dataLayer.push({
+        event: 'add_to_cart',
+        ecommerce: {
+          items: [{
+            item_id: String(id),
+            item_name: name
+          }]
+        }
+      });
+    }
+    
+    // Find cart badge and increment
     var $badge = $('.fa-cart-arrow-down').closest('a').find('.badge');
     if (!$badge.length) {
-      // try alternate selector
       $badge = $('.nav-icon .badge').first();
     }
     if ($badge.length) {
       var val = parseInt($badge.text()) || 0;
       $badge.text(val + 1);
     } else {
-      // fallback: show a temporary toast
-      console.log('Added to cart (id=' + id + ')');
+      console.log('Added to cart (id=' + id + ', name=' + name + ')');
       alert('Added to cart');
     }
   });
@@ -134,10 +188,123 @@ $(function () {
 
       // Make the single-page "Add To Cart" button work with existing handler
       $('button[name="submit"][value="addtocard"]').addClass('btn-add-cart').attr('data-id', p.id);
+      $('button[name="submit"][value="buy"]').attr('data-item-id', p.id).attr('data-item-name', p.title);
+      $('button[name="submit"][value="addtocard"]').attr('data-item-id', p.id).attr('data-item-name', p.title);
+      
+      // Set data attributes on product detail container and main image
+      $productDetail.prop('dataset').itemId = String(p.id);
+      $productDetail.prop('dataset').itemName = (p.title || '').trim();
+      
+      // Annotate the entire product section
+      var $productSection = $productDetail.closest('section');
+      if ($productSection.length) {
+        annotateProductActions(p, $productSection);
+      }
+      
+      // Push GA4 view_item event
+      if (typeof dataLayer !== 'undefined') {
+        dataLayer.push({
+          event: 'view_item',
+          ecommerce: {
+            items: [{
+              item_id: String(p.id),
+              item_name: p.title || '',
+              price: p.price,
+              quantity: 1
+            }]
+          }
+        });
+      }
 
     })
     .catch(function (err) {
       console.error('Failed to load products.json', err);
       $('.container.pb-5').html('<div class="alert alert-danger">Failed to load product data.</div>');
+    });
+});
+
+// Render related products on single product page
+$(function () {
+  var $carouselContainer = $('#carousel-related-product');
+  if (!$carouselContainer.length) return;
+
+  var params = new URLSearchParams(window.location.search);
+  var currentId = parseInt(params.get('id'), 10);
+  if (!currentId) return;
+
+  fetch('./data/products.json')
+    .then(function (res) { return res.json(); })
+    .then(function (products) {
+      // Get related products: all products except current one
+      var relatedProducts = products.filter(function (p) { return p.id !== currentId; });
+      
+      var html = '';
+      relatedProducts.forEach(function (p) {
+        html += '<div class="p-2 pb-3">';
+        html += '  <div class="product-wap card rounded-0" data-item-id="' + p.id + '" data-item-name="' + (p.title && p.title.replace(/"/g, '&quot;')) + '">';
+        html += '    <div class="card rounded-0">';
+        html += '      <a href="shop-single.html?id=' + p.id + '" data-item-id="' + p.id + '" data-item-name="' + (p.title && p.title.replace(/"/g, '&quot;')) + '"><img class="card-img rounded-0 img-fluid" src="' + p.image + '" alt="' + p.title + '"></a>';
+        html += '      <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">';
+        html += '        <ul class="list-unstyled">';
+        html += '          <li><a class="btn btn-success text-white" href="shop-single.html" data-item-id="' + p.id + '" data-item-name="' + (p.title && p.title.replace(/"/g, '&quot;')) + '"><i class="far fa-heart"></i></a></li>';
+        html += '          <li><a class="btn btn-success text-white mt-2" href="shop-single.html?id=' + p.id + '" data-item-id="' + p.id + '" data-item-name="' + (p.title && p.title.replace(/"/g, '&quot;')) + '"><i class="far fa-eye"></i></a></li>';
+        html += '          <li><a class="btn btn-success text-white mt-2" href="shop-single.html" data-item-id="' + p.id + '" data-item-name="' + (p.title && p.title.replace(/"/g, '&quot;')) + '"><i class="fas fa-cart-plus"></i></a></li>';
+        html += '        </ul>';
+        html += '      </div>';
+        html += '    </div>';
+        html += '    <div class="card-body">';
+        html += '      <a href="shop-single.html?id=' + p.id + '" class="h3 text-decoration-none" data-item-id="' + p.id + '" data-item-name="' + (p.title && p.title.replace(/"/g, '&quot;')) + '">' + p.title + '</a>';
+        html += '      <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">';
+        html += '        <li>' + p.sizes.join('/') + '</li>';
+        html += '        <li class="pt-2">';
+        p.colors.forEach(function(c){
+          html += '<span class="product-color-dot color-dot-' + c + ' float-left rounded-circle ml-1"></span>';
+        });
+        html += '        </li>';
+        html += '      </ul>';
+        html += '      <ul class="list-unstyled d-flex justify-content-center mb-1"><li>';
+        for (var i = 0; i < 5; i++) {
+          html += i < p.rating ? '<i class="text-warning fa fa-star"></i>' : '<i class="text-muted fa fa-star"></i>';
+        }
+        html += '</li></ul>';
+        html += '      <p class="text-center mb-0">$' + p.price + '</p>';
+        html += '    </div>';
+        html += '  </div>';
+        html += '</div>';
+      });
+      
+      $carouselContainer.html(html);
+      
+      // Annotate all related products using safe DOM dataset
+      relatedProducts.forEach(function (p) {
+        var $productCard = $carouselContainer.find('[data-item-id="' + p.id + '"]').first();
+        if ($productCard.length) {
+          annotateProductActions(p, $productCard);
+        }
+      });
+      
+      // Re-initialize Slick carousel
+      if ($.fn.slick) {
+        try {
+          $('#carousel-related-product').slick('unslick');
+        } catch(e) {}
+        
+        $('#carousel-related-product').slick({
+          infinite: true,
+          arrows: false,
+          slidesToShow: 4,
+          slidesToScroll: 3,
+          dots: true,
+          responsive: [
+            { breakpoint: 1024, settings: { slidesToShow: 3, slidesToScroll: 3 } },
+            { breakpoint: 600, settings: { slidesToShow: 2, slidesToScroll: 3 } },
+            { breakpoint: 480, settings: { slidesToShow: 2, slidesToScroll: 3 } }
+          ]
+        });
+      }
+    })
+    .catch(function (err) {
+      console.error('Failed to load related products', err);
+      $carouselContainer.html('<div class="p-2 pb-3 text-center">Failed to load related products.</div>');
     });
 });
