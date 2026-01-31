@@ -58,5 +58,35 @@
     "colors": ["black","green"],
     "rating": 5,
     "reviews": 30
-  }
+  },
+  {
+  "id": 7,
+  "title": "Gym Weight",
+  "price": "240.00",
+  "image": "assets/img/feature_prod_01.jpg",
+  "sizes": ["M","L","X","XL"],
+  "colors": ["black"],
+  "rating": 3,
+  "reviews": 24
+},
+{
+  "id": 8,
+  "title": "Cloud Nike Shoes",
+  "price": "480.00",
+  "image": "assets/img/feature_prod_02.jpg",
+  "sizes": ["M","L","X","XL"],
+  "colors": ["red","blue","black"],
+  "rating": 3,
+  "reviews": 48
+},
+{
+  "id": 9,
+  "title": "Summer Addides Shoes",
+  "price": "360.00",
+  "image": "assets/img/feature_prod_03.jpg",
+  "sizes": ["M","L","X","XL"],
+  "colors": ["red","blue","black"],
+  "rating": 5,
+  "reviews": 74
+}
 ]
