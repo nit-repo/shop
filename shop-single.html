@@ -72,9 +72,9 @@
                     <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
                         <i class="fa fa-fw fa-search text-dark mr-2"></i>
                     </a>
-                    <a class="nav-icon position-relative text-decoration-none" href="#">
+                    <a class="nav-icon position-relative text-decoration-none" href="#" id="cart-icon-link" data-bs-toggle="modal" data-bs-target="#cartModal">
                         <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
-                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">7</span>
+                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark" id="cart-badge">0</span>
                     </a>
                     <a class="nav-icon position-relative text-decoration-none" href="#">
                         <i class="fa fa-fw fa-user text-dark mr-3"></i>
@@ -104,7 +104,26 @@
         </div>
     </div>
 
-
+    <!-- Start Cart Modal -->
+    <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cartModalLabel">Shopping Cart</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="cart-items-container"></div>
+                    <div id="cart-summary" class="mt-3"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Continue Shopping</button>
+                    <button type="button" class="btn btn-success" id="checkout-button">Proceed to Checkout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Cart Modal -->
 
     <!-- Open Content -->
     <section class="bg-light">
@@ -283,7 +302,10 @@
                                         <button type="submit" class="btn btn-success btn-lg" name="submit" value="buy">Buy</button>
                                     </div>
                                     <div class="col d-grid">
-                                        <button type="submit" class="btn btn-success btn-lg" name="submit" value="addtocard">Add To Cart</button>
+                                        <button type="submit" class="btn btn-success btn-lg btn-add-cart" name="submit" value="addtocard">Add To Cart</button>
+                                    </div>
+                                    <div class="col d-grid">
+                                        <button type="submit" class="btn btn-danger btn-lg btn-remove-cart" name="submit" value="removefromcart" style="display:none;">Remove from Cart</button>
                                     </div>
                                 </div>
                             </form>
@@ -909,6 +931,8 @@
         });
     </script>
     <!-- End Slider Script -->
+    <script src="assets/js/cart.js"></script>
+    <script src="assets/js/render-products.js"></script>
 
 </body>
 

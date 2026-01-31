@@ -1,3 +1,26 @@
+/* Helper: Check if product is in cart */
+function isProductInCart(productId) {
+  if (typeof ShopCart === 'undefined') return false;
+  var cart = ShopCart.getCart();
+  return cart.items.some(function(item) { return item.id === productId; });
+}
+
+/* Helper: Toggle add/remove buttons based on cart state */
+function updateCartButtons(productId) {
+  $('[data-item-id="' + productId + '"]').each(function() {
+    var $addBtn = $(this).find('.btn-add-cart');
+    var $removeBtn = $(this).find('.btn-remove-cart');
+    
+    if (isProductInCart(productId)) {
+      $addBtn.hide();
+      $removeBtn.show();
+    } else {
+      $addBtn.show();
+      $removeBtn.hide();
+    }
+  });
+}
+
 /* Helper: Annotate all product actions in a container with data-item-id and data-item-name using safe DOM APIs */
 function annotateProductActions(product, container) {
   if (!product || !product.id) return;
@@ -23,7 +46,7 @@ function annotateProductActions(product, container) {
   });
   
   // Set on add-to-cart button
-  $container.find('.btn-add-cart').each(function() {
+  $container.find('.btn-add-cart, .btn-remove-cart').each(function() {
     this.dataset.itemId = itemId;
     this.dataset.itemName = itemName;
   });
@@ -69,7 +92,8 @@ $(function () {
         html += '</li></ul>';
         html += '      <p class="text-center mb-0">$' + p.price + '</p>';
         html += '      <div class="text-center mt-2">';
-        html += '        <button class="btn btn-success btn-add-cart" data-id="' + p.id + '" data-item-id="' + p.id + '" data-item-name="' + (p.title && p.title.replace(/"/g, '&quot;')) + '">Add to Cart</button>';
+        html += '        <button class="btn btn-success btn-add-cart" data-id="' + p.id + '" data-item-id="' + p.id + '" data-item-name="' + (p.title && p.title.replace(/"/g, '&quot;')) + '" data-price="' + p.price + '">Add to Cart</button>';
+        html += '        <button class="btn btn-danger btn-remove-cart" data-id="' + p.id + '" data-item-id="' + p.id + '" data-item-name="' + (p.title && p.title.replace(/"/g, '&quot;')) + '" style="display:none;">Remove from Cart</button>';
         html += '      </div>';
         html += '    </div>';
         html += '  </div>';
@@ -82,6 +106,7 @@ $(function () {
         var $productCard = $grid.find('[data-item-id="' + p.id + '"]').first();
         if ($productCard.length) {
           annotateProductActions(p, $productCard);
+          updateCartButtons(p.id);
         }
       });
     })
@@ -91,19 +116,56 @@ $(function () {
     });
 });
 
-// Add-to-cart handler: reads id/name from dataset and pushes GA4 event, increments cart badge
+// Add-to-cart and Remove-from-cart handlers
 $(function () {
+  // Add to cart button
   $(document).on('click', '.btn-add-cart', function (e) {
     e.preventDefault();
     
-    // Read id/name from dataset first (new safe method), fall back to data-id for backward compat
-    var id = this.dataset.itemId || $(this).data('id');
+    // Read id/name/price from dataset first (new safe method), fall back to data-id for backward compat
+    var id = parseInt(this.dataset.itemId || $(this).data('id'));
     var name = this.dataset.itemName || '';
+    var price = parseFloat(this.dataset.price) || 0;
+    
+    // Add to localStorage cart
+    if (typeof ShopCart !== 'undefined') {
+      ShopCart.addItem(id, name, price);
+    }
     
     // Push GA4 add_to_cart event if dataLayer is available
     if (typeof dataLayer !== 'undefined' && id) {
       dataLayer.push({
         event: 'add_to_cart',
+        ecommerce: {
+          items: [{
+            item_id: String(id),
+            item_name: name,
+            price: price
+          }]
+        }
+      });
+    }
+    
+    // Update button visibility
+    updateCartButtons(id);
+  });
+  
+  // Remove from cart button
+  $(document).on('click', '.btn-remove-cart', function (e) {
+    e.preventDefault();
+    
+    var id = parseInt(this.dataset.itemId || $(this).data('id'));
+    var name = this.dataset.itemName || '';
+    
+    // Remove from localStorage cart
+    if (typeof ShopCart !== 'undefined') {
+      ShopCart.removeItem(id);
+    }
+    
+    // Push GA4 remove_from_cart event if dataLayer is available
+    if (typeof dataLayer !== 'undefined' && id) {
+      dataLayer.push({
+        event: 'remove_from_cart',
         ecommerce: {
           items: [{
             item_id: String(id),
@@ -113,18 +175,8 @@ $(function () {
       });
     }
     
-    // Find cart badge and increment
-    var $badge = $('.fa-cart-arrow-down').closest('a').find('.badge');
-    if (!$badge.length) {
-      $badge = $('.nav-icon .badge').first();
-    }
-    if ($badge.length) {
-      var val = parseInt($badge.text()) || 0;
-      $badge.text(val + 1);
-    } else {
-      console.log('Added to cart (id=' + id + ', name=' + name + ')');
-      alert('Added to cart');
-    }
+    // Update button visibility
+    updateCartButtons(id);
   });
 });
 
@@ -189,7 +241,13 @@ $(function () {
       // Make the single-page "Add To Cart" button work with existing handler
       $('button[name="submit"][value="addtocard"]').addClass('btn-add-cart').attr('data-id', p.id);
       $('button[name="submit"][value="buy"]').attr('data-item-id', p.id).attr('data-item-name', p.title);
-      $('button[name="submit"][value="addtocard"]').attr('data-item-id', p.id).attr('data-item-name', p.title);
+      $('button[name="submit"][value="addtocard"]').attr('data-item-id', p.id).attr('data-item-name', p.title).attr('data-price', p.price);
+      
+      // Check if product is already in cart and set button visibility
+      if (isProductInCart(p.id)) {
+        $('button[name="submit"][value="addtocard"]').hide();
+        $('button[name="submit"][value="removefromcart"]').show();
+      }
       
       // Set data attributes on product detail container and main image
       $productDetail.prop('dataset').itemId = String(p.id);
