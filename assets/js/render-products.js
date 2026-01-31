@@ -1,9 +1,9 @@
-/* Render product grid from /data/products.json */
+/* Render product grid from ./data/products.json */
 $(function () {
   var $grid = $('#product-grid');
   if (!$grid.length) return;
 
-  fetch('/data/products.json')
+  fetch('./data/products.json')
     .then(function (res) { return res.json(); })
     .then(function (products) {
       var html = '';
