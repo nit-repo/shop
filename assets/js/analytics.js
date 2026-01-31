@@ -3,32 +3,32 @@
 
   // Exact GA / GTM snippets (kept verbatim)
   var headSnippet = '<!-- Google tag (gtag.js) -->\n' +
-'<script async src="https://www.googletagmanager.com/gtag/js?id=G-Y2P3RZNXLR"></script>\n' +
-'<script>\n' +
-'  window.dataLayer = window.dataLayer || [];\n' +
-'  function gtag(){dataLayer.push(arguments);}\n' +
-"  gtag('js', new Date());\n\n" +
-"  gtag('config', 'G-Y2P3RZNXLR');\n" +
-'</script>\n' +
-'<!-- Google Tag Manager -->\n' +
-'<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({\'gtm.start\':\n' +
-'new Date().getTime(),event:\'gtm.js\'});var f=d.getElementsByTagName(s)[0],\n' +
-"j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=\n" +
-"'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);\n" +
-"})(window,document,'script','dataLayer','GTM-WVFK4S5C');</script>\n" +
-'<!-- End Google Tag Manager -->';
+    '<script async src="https://www.googletagmanager.com/gtag/js?id=G-Y2P3RZNXLR"></script>\n' +
+    '<script>\n' +
+    '  window.dataLayer = window.dataLayer || [];\n' +
+    '  function gtag(){dataLayer.push(arguments);}\n' +
+    "  gtag('js', new Date());\n\n" +
+    "  gtag('config', 'G-Y2P3RZNXLR');\n" +
+    '</script>\n' +
+    '<!-- Google Tag Manager -->\n' +
+    '<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({\'gtm.start\':\n' +
+    'new Date().getTime(),event:\'gtm.js\'});var f=d.getElementsByTagName(s)[0],\n' +
+    "j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=\n" +
+    "'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);\n" +
+    "})(window,document,'script','dataLayer','GTM-WVFK4S5C');</script>\n" +
+    '<!-- End Google Tag Manager -->';
 
   var bodySnippet = '<!-- Google Tag Manager (noscript) -->\n' +
-'<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WVFK4S5C"\n' +
-'height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>\n' +
-'<!-- End Google Tag Manager (noscript) -->';
+    '<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WVFK4S5C"\n' +
+    'height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>\n' +
+    '<!-- End Google Tag Manager (noscript) -->';
 
   // Avoid duplicate insertion
   function alreadyInserted() {
     return !!document.querySelector('script[src*="gtag/js?id=G-Y2P3RZNXLR"]') ||
-           !!document.querySelector('script[src*="gtm.js?id=GTM-WVFK4S5C"]') ||
-           !!document.querySelector('noscript iframe[src*="GTM-WVFK4S5C"]') ||
-           !!document.querySelector('script[data-analytics-injected="1"]');
+      !!document.querySelector('script[src*="gtm.js?id=GTM-WVFK4S5C"]') ||
+      !!document.querySelector('noscript iframe[src*="GTM-WVFK4S5C"]') ||
+      !!document.querySelector('script[data-analytics-injected="1"]');
   }
 
   if (!alreadyInserted()) {
