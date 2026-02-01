@@ -17,18 +17,19 @@ var ShopCart = {
   },
 
   // Add item to cart
-  addItem: function (itemId, itemName, price) {
+  addItem: function (itemId, itemName, price, qty) {
     var cart = this.getCart() || { items: [], total: 0 };
     var existingItem = cart.items.find(function (i) { return i.id === itemId; });
+    var addQty = parseInt(qty) || 1;
 
     if (existingItem) {
-      existingItem.qty += 1;
+      existingItem.qty += addQty;
     } else {
       cart.items.push({
         id: itemId,
         name: itemName,
         price: parseFloat(price) || 0,
-        qty: 1
+        qty: addQty
       });
     }
 

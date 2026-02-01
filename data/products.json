@@ -1,92 +1,208 @@
 [
   {
     "id": 1,
-    "title": "Oupidatat non",
-    "price": "250.00",
+    "title": "Aura Linen Shirt",
+    "price": "85.00",
     "image": "assets/img/shop_01.jpg",
-    "sizes": ["M","L","X","XL"],
-    "colors": ["red","blue","black","light","green"],
-    "rating": 3,
-    "reviews": 24
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "white",
+      "beige",
+      "light-blue"
+    ],
+    "rating": 5,
+    "reviews": 42,
+    "category": "Fits",
+    "featured": true,
+    "description": "Breathable, effortless, and timeless. The Aura Linen Shirt is crafted from premium European flax, ensuring you stay cool when the heat is on."
   },
   {
     "id": 2,
-    "title": "Cloud Nike Shoes",
-    "price": "480.00",
+    "title": "Zenith Gravity Boots",
+    "price": "210.00",
     "image": "assets/img/shop_02.jpg",
-    "sizes": ["M","L","X","XL"],
-    "colors": ["red","blue","black"],
-    "rating": 3,
-    "reviews": 48
+    "sizes": [
+      "8",
+      "9",
+      "10",
+      "11"
+    ],
+    "colors": [
+      "midnight-black",
+      "slate"
+    ],
+    "rating": 4.5,
+    "reviews": 128,
+    "category": "Accessories",
+    "featured": true,
+    "description": "Defy the elements. These rugged yet refined boots feature weather-resistant leather and high-traction soles for the modern urban explorer."
   },
   {
     "id": 3,
-    "title": "Summer Addides Shoes",
-    "price": "360.00",
+    "title": "Nomad Canvas Tote",
+    "price": "45.00",
     "image": "assets/img/shop_03.jpg",
-    "sizes": ["M","L","X","XL"],
-    "colors": ["red","blue","black","green"],
-    "rating": 5,
-    "reviews": 74
+    "sizes": [
+      "One Size"
+    ],
+    "colors": [
+      "olive",
+      "tan",
+      "black"
+    ],
+    "rating": 4,
+    "reviews": 89,
+    "category": "Accessories",
+    "featured": false,
+    "description": "Your daily carry, upgraded. Built from heavy-duty waxed canvas with reinforced leather handles, the Nomad is ready for any journey."
   },
   {
     "id": 4,
-    "title": "Red Clothing",
-    "price": "20.00",
+    "title": "Cipher Tech Parka",
+    "price": "295.00",
     "image": "assets/img/shop_08.jpg",
-    "sizes": ["M","L","X","XL"],
-    "colors": ["red","blue"],
-    "rating": 4,
-    "reviews": 12
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "stealth-grey",
+      "black"
+    ],
+    "rating": 5,
+    "reviews": 15,
+    "category": "Fits",
+    "featured": true,
+    "description": "Minimal design, maximum protection. This waterproof parka's modular pockets and streamlined silhouette define the new tech-wear standard."
   },
   {
     "id": 5,
-    "title": "White Shirt",
-    "price": "25.00",
+    "title": "Eclipse Slim Chinos",
+    "price": "75.00",
     "image": "assets/img/shop_09.jpg",
-    "sizes": ["M","L","X","XL"],
-    "colors": ["white","black"],
-    "rating": 4,
-    "reviews": 8
+    "sizes": [
+      "30",
+      "32",
+      "34",
+      "36"
+    ],
+    "colors": [
+      "navy",
+      "charcoal",
+      "khaki"
+    ],
+    "rating": 4.5,
+    "reviews": 210,
+    "category": "Fits",
+    "featured": false,
+    "description": "The perfect taper for everyday versatility. Our Eclipse Chinos feature just enough stretch for comfort without losing their sharp, tailored finish."
   },
   {
     "id": 6,
-    "title": "Oupidatat non (Premium)",
-    "price": "45.00",
+    "title": "Vanguard Pilot Frames",
+    "price": "145.00",
     "image": "assets/img/shop_10.jpg",
-    "sizes": ["M","L","X","XL"],
-    "colors": ["black","green"],
+    "sizes": [
+      "Standard"
+    ],
+    "colors": [
+      "gold",
+      "silver",
+      "matte-black"
+    ],
     "rating": 5,
-    "reviews": 30
+    "reviews": 64,
+    "category": "Accessories",
+    "featured": false,
+    "description": "Retro soul with a futuristic edge. Polarized lenses housed in aerospace-grade titanium—vanguard style for the visionaries."
   },
   {
-  "id": 7,
-  "title": "Gym Weight",
-  "price": "240.00",
-  "image": "assets/img/feature_prod_01.jpg",
-  "sizes": ["M","L","X","XL"],
-  "colors": ["black"],
-  "rating": 3,
-  "reviews": 24
-},
-{
-  "id": 8,
-  "title": "Cloud Nike Shoes",
-  "price": "480.00",
-  "image": "assets/img/feature_prod_02.jpg",
-  "sizes": ["M","L","X","XL"],
-  "colors": ["red","blue","black"],
-  "rating": 3,
-  "reviews": 48
-},
-{
-  "id": 9,
-  "title": "Summer Addides Shoes",
-  "price": "360.00",
-  "image": "assets/img/feature_prod_03.jpg",
-  "sizes": ["M","L","X","XL"],
-  "colors": ["red","blue","black"],
-  "rating": 5,
-  "reviews": 74
-}
+    "id": 7,
+    "title": "Apex Performance Tee",
+    "price": "40.00",
+    "image": "assets/img/feature_prod_01.jpg",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "electric-blue",
+      "black",
+      "grey"
+    ],
+    "rating": 4.5,
+    "reviews": 320,
+    "category": "Fits",
+    "featured": false,
+    "description": "Engineered for excellence. Moisture-wicking fabric meets seamless construction to give you unrestricted movement during your most intense sessions."
+  },
+  {
+    "id": 8,
+    "title": "Stratus Cloud Runners",
+    "price": "130.00",
+    "image": "assets/img/feature_prod_02.jpg",
+    "sizes": [
+      "7",
+      "8",
+      "9",
+      "10",
+      "11"
+    ],
+    "colors": [
+      "neon",
+      "white",
+      "black"
+    ],
+    "rating": 5,
+    "reviews": 456,
+    "category": "Accessories",
+    "featured": false,
+    "description": "Feel the weightlessness. Our Stratus technology cushioning turns every concrete step into a soft landing. Light speed never felt so plush."
+  },
+  {
+    "id": 9,
+    "title": "Crest Heavyweight Hoodie",
+    "price": "95.00",
+    "image": "assets/img/feature_prod_03.jpg",
+    "sizes": [
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "colors": [
+      "heather-grey",
+      "black"
+    ],
+    "rating": 4.5,
+    "reviews": 112,
+    "category": "Fits",
+    "featured": false,
+    "description": "The gold standard of loungewear. Made from ultra-thick 450GSM French terry, the Crest Hoodie provides unparalleled warmth and a structured, oversized fit."
+  },
+  {
+    "id": 10,
+    "title": "Onyx Leather Weekend",
+    "price": "350.00",
+    "image": "assets/img/shop_11.jpg",
+    "sizes": [
+      "45L"
+    ],
+    "colors": [
+      "onyx-black"
+    ],
+    "rating": 5,
+    "reviews": 27,
+    "category": "Accessories",
+    "featured": false,
+    "description": "Travel First Class, even in coach. This hand-stitched full-grain leather duffel is the ultimate companion for those 48-hour escapes."
+  }
 ]

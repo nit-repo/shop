@@ -1,0 +1,49 @@
+Extracting Navbar and Footer to root HTML files
+
+2
+Updating index.html to use reusable components
+
+3
+Updating shop.html, shop-single.html, about.html, and contact.html to use reusable components
+
+4
+Applying reusable component updates to all HTML pages
+
+5
+Updating shop-single.html and contact.html, and cleaning up redundant scripts
+
+6
+Implementing dynamic featured products on the homepage
+
+7
+Updating products.json and render-products.js to support dynamic featured products
+
+8
+Standardizing the featured product structure and updating render-products.js
+
+9
+Updating products.json with featured status and descriptions
+
+10
+Updating render-products.js with featured product rendering logic
+
+11
+Updating render-products.js and index.html to dynamically load featured products
+
+12
+Correcting render-products.js to properly insert featured product logic
+
+13
+Implementing client-side search, filtering, and sorting on the shop page
+
+14
+Updating products.json with category/gender metadata and preparing search integration
+
+15
+Updating products.json with comprehensive metadata for filtering
+
+16
+Updating shop.html with filter/sort metadata and render-products.js with matching logic
+
+17
+Rewriting render-products.js to implement a state-driven filtering and sorting system
