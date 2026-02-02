@@ -272,27 +272,4 @@ $(document).on('click', '.btn-add-cart', function(e) {
 User Action → Event Listener → Update State → Re-render UI → Sync LocalStorage
 ```
 
-## 🌐 Browser Support
 
-| Browser | Version |
-|---------|---------|
-| Chrome  | 60+     |
-| Firefox | 55+     |
-| Safari  | 11+     |
-| Edge    | 79+     |
-
-
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- **TemplateMo** - Original template design
-- **Bootstrap Team** - UI framework
-- **jQuery Foundation** - DOM manipulation library
-- **Slick Carousel** - Carousel component
-
-
-**Made with ❤️ by the FashionZ Team**
